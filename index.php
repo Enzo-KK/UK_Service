@@ -16,7 +16,8 @@
     <script>
         function ValChange(ent) {
             var entered = ent.value;
-            if (isNaN(entered))
+            // if (typeof parseInt(entered) !== "number")
+                if (isNaN(entered))
                 document.getElementById("pass_tp").type = "password";
             else
                 document.getElementById("pass_tp").type = "text";

@@ -5,9 +5,9 @@
  * Date: 15.05.19
  * Time: 10:48
  */
-// Модуль просмотра заявки
 
 require_once 'mySecure.php';
+require_once 'myClass.php';
 
 // проверим есть ли гет и метку администратора
 if (!isset($_SESSION['adm_on']) || $_SESSION['adm_on']!=1) {

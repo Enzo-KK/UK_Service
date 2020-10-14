@@ -5,10 +5,11 @@
  * Date: 30.01.19
  * Time: 14:01
  */
-// Модуль загрузки и выгрузки показаний
 
 require_once 'mySecure.php';
+require_once 'myClass.php';
 
+// проверка административного входв
 if (!isset($_SESSION['adm_on']) || $_SESSION['adm_on']!=1) {
     header('Location: index.php');
 }

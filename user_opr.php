@@ -5,7 +5,7 @@
  * Date: 13.03.19
  * Time: 14:01
  */
-// Модуль опросов пользователя
+
 
 require_once 'mySecure.php';
 require_once 'myClass.php';

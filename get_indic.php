@@ -19,18 +19,12 @@ $data = 'pokazania_' . date("Ymd");
 //$date_now = date("d.m.Y H:i:s");
 // сократим. нафиг время
 $date_now = date("d.m.Y");
-// для записи в поле дата бд
-//$date_now_s = CURRENT_DATE();
-
-// чтобы потом использовать в нашем формате надо преобразовывать дату
-//DATE_FORMAT(`date`,'%d.%m.%Y');
 
 // запросом выбираем все записи заявок и запускаем циклом запись в файл построчно
 
 // выбираем все лицевые
 //$sql = mysqli_query($link, "SELECT DISTINCT lchet from polucheno");
-$sql = mysqli_query($link, "SELECT * from polucheno  
-    WHERE str_to_date(date, '%d.%m.%Y') > str_to_date('01.07.2019','%d.%m.%Y') group by lchet");
+$sql = mysqli_query($link, "SELECT * from polucheno group by lchet");
 if (mysqli_num_rows($sql) == 0)
 {
     header('Location: adm_page.php?message=dwldno');
@@ -54,7 +48,7 @@ else{
     fclose($file);
 }
 // сохраним дату забора показаний. надо подумать как исключать повтор забора прошломесячных
-//$sql = mysqli_query($link, "update date_bd set dat_get_ind = '$date_now' ");
+$sql = mysqli_query($link, "update date_bd set dat_get_ind = '$date_now' ");
 // может чек поставить - только новые..
 
 // простейшее решение - получение ссылки для загрузки

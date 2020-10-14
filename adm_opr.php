@@ -5,9 +5,9 @@
  * Date: 13.09.19
  * Time: 14:01
  */
-// Модуль формирования опросов
 
 require_once 'mySecure.php';
+require_once 'myClass.php';
 
 if (!isset($_SESSION['adm_on']) || $_SESSION['adm_on']!=1) {
     header('Location: index.php');

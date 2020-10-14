@@ -6,16 +6,20 @@
  * Time: 10:28
  */
 
-//Выгрузга хмл файла с данными на фтп
+//Выгрузка хмл файла с данными на фтп
 
 require_once 'mySecure.php';
 
+$dat_ind = date("my");
 $filep = $_FILES['userfile']['tmp_name'];
 $ftp_server = FTP_SRV;
 $ftp_user_name = FTP_USER;
 $ftp_user_pass = FTP_PASS;
 $paths = FTP_PATH;
-$name = $_FILES['userfile']['name'];
+// было то же имя файла
+//$name = $_FILES['userfile']['name'];
+// конкретезируем имя
+$name = 'vigruzka'.$dat_ind.'.xml';
 $res = 'no';
 
 $conn_id = ftp_connect($ftp_server) or die("Не удалось установить соединение с $ftp_server");

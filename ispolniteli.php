@@ -8,7 +8,7 @@
 
 require_once 'mySecure.php';
 
-// проверим есть ли гет и метку администратора
+// проверим есть ли метка администратора
 if (!isset($_SESSION['adm_on']) || $_SESSION['adm_on']!=1) {
     header('Location: index.php');
     exit;
