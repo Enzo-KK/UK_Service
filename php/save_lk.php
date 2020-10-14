@@ -15,8 +15,10 @@ $data = date("YmdHis");
 $date_now = date("d.m.Y");
 $file = fopen($_SERVER['DOCUMENT_ROOT'].'/inSite/'.$data.'.txt', 'a');
 
+if (isset($_POST['phone'])){
 $str = preg_replace('#\(?(\w)\)?#s','$1',$_POST['phone']);
 $str = preg_replace("#(?<=\d)[\s-]+(?=\d)#","",$str);
+}
 
 //fwrite($file, 'Улица:' 					. $_POST['street'] 				. ";");
 //fwrite($file, 'Дом:' 						. $_POST['house'] 				. ";");
@@ -42,14 +44,14 @@ fwrite($file, 'Тип прибора:' 				. 'ХВС' 		. ";");
 fwrite($file, 'Код прибора:' 			. $_POST['kod_hv1'] 		. ";");
 fwrite($file, 'Показания:' 				. $_POST['counter_statement_hv1'] 	. ";");
 
-if($_POST['counter_statement_hv2'] != 0) {
+if(isset($_POST['counter_statement_hv2']) && $_POST['counter_statement_hv2'] != 0) {
     fwrite($file, 'Тип прибора:' 				. 'ХВС' 		. ";");
 //    fwrite($file, 'Серийный номер:' 			. $_POST['serial_number_hv2'] 		. ";");
     fwrite($file, 'Код прибора:' 			. $_POST['kod_hv2'] 		. ";");
     fwrite($file, 'Показания:' 				. $_POST['counter_statement_hv2'] 	. ";");
 }
 
-if($_POST['counter_statement_hv3'] != 0) {
+if(isset($_POST['counter_statement_hv3']) && $_POST['counter_statement_hv3'] != 0) {
     fwrite($file, 'Тип прибора:' 				. 'ХВС' 		. ";");
 //    fwrite($file, 'Серийный номер:' 			. $_POST['serial_number_hv2'] 		. ";");
     fwrite($file, 'Код прибора:' 			. $_POST['kod_hv3'] 		. ";");
@@ -62,14 +64,14 @@ fwrite($file, 'Тип прибора:' 				. 'ГВС' 		. ";");
 fwrite($file, 'Код прибора:' 			. $_POST['kod_gv1'] 		. ";");
 fwrite($file, 'Показания:' 				. $_POST['counter_statement_gv1'] 	. ";");
 
-if($_POST['counter_statement_gv2'] != 0) {
+if(isset($_POST['counter_statement_gv2']) && $_POST['counter_statement_gv2'] != 0) {
     fwrite($file, 'Тип прибора:' 				. 'ГВС' 		. ";");
 //    fwrite($file, 'Серийный номер:' 			. $_POST['serial_number_gv2'] 		. ";");
     fwrite($file, 'Код прибора:' 			. $_POST['kod_gv2'] 		. ";");
     fwrite($file, 'Показания:' 				. $_POST['counter_statement_gv2'] 	. ";");
 }
 
-if($_POST['counter_statement_gv3'] != 0) {
+if(isset($_POST['counter_statement_hv3']) && $_POST['counter_statement_gv3'] != 0) {
     fwrite($file, 'Тип прибора:' 				. 'ГВС' 		. ";");
 //    fwrite($file, 'Серийный номер:' 			. $_POST['serial_number_gv2'] 		. ";");
     fwrite($file, 'Код прибора:' 			. $_POST['kod_gv3'] 		. ";");
@@ -111,14 +113,14 @@ $sql = mysqli_query($link, "INSERT INTO polucheno (lchet, kod, service, indiccur
     ON DUPLICATE KEY UPDATE service='Гор.вода', indiccur1='{$gv_new}', date='{$date_now}' ");
 
 // если есть показания второго прибора
-if($_POST['counter_statement_hv2'] != 0) {
+if(isset($_POST['counter_statement_hv2']) && $_POST['counter_statement_hv2'] != 0) {
     $hvn2 = $_POST['kod_hv2'];
     $hv_new2 = $_POST['counter_statement_hv2'];
 //    $sql = mysqli_query($link, "insert into polucheno(lchet, service, kod, indiccur1, date) values('{$lc}', 'Хол/в', '{$hvn2}', '{$hv_new2}', '{$date_now}')");
     $sql = mysqli_query($link, "INSERT INTO polucheno (lchet, kod, service, indiccur1, date) values('{$lc}', '{$hvn2}', 'Хол/в', '{$hv_new2}', '{$date_now}') 
     ON DUPLICATE KEY UPDATE service='Хол/в', indiccur1='{$hv_new2}', date='{$date_now}' ");
 }
-if($_POST['counter_statement_gv2'] != 0) {
+if(isset($_POST['counter_statement_gv2']) && $_POST['counter_statement_gv2'] != 0) {
     $gvn2 = $_POST['kod_gv2'];
     $gv_new2 = $_POST['counter_statement_gv2'];
 //    $sql = mysqli_query($link, "insert into polucheno(lchet, service, kod, indiccur1, date) values('{$lc}', 'Гор.вода', '{$gvn2}', '{$gv_new2}', '{$date_now}')");

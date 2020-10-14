@@ -72,11 +72,11 @@ $dtek = date("Y-m-d H:i:s");    //текущая дата. решил не ис�
 $gt_chkal = isset($_GET['message']) ? $_GET['message'] : '0';
 if ($gt_chkal == 'checked'){
     $chkd = 'checked';
-    $sql = mysqli_query($link, "SELECT * from date_busy ");
+    $sql = mysqli_query($link, "SELECT * from date_busy ORDER BY id DESC");
 }
 else{
     $chkd = '';
-    $sql = mysqli_query($link, "SELECT * from date_busy where date_b >= '$dtek' ");
+    $sql = mysqli_query($link, "SELECT * from date_busy where date_b >= '$dtek' ORDER BY id DESC");
 }
 
 $date_bus = array();
@@ -136,20 +136,21 @@ if ($chek_cat != ''){
 //  уточняем для свчича
     $chek_cat = preg_match("/[0-3][0-9]\.[0-1][0-9]\.[1-2][0-9]/", $chek_cat) ? 'dt' : $chek_cat;
 
+//    сначала последние
     switch ($chek_cat) {
         case 'selno':
 //    получаем список заявок в процессе работы
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.done is null ");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.done is null ORDER BY zayavki.nom_zay DESC");
             break;
         case 'inwork':
 //    получаем список заявок в процессе работы
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.done is null ");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.done is null ORDER BY zayavki.nom_zay DESC");
             break;
         case 'elec':
             $zag_tab1 = 'Заявки по электроэнергии';
@@ -157,7 +158,7 @@ if ($chek_cat != ''){
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Электроэнергия' ");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Электроэнергия' ORDER BY zayavki.nom_zay DESC");
         break;
         case 'voda':
             $zag_tab1 = 'Заявки по воде';
@@ -165,7 +166,7 @@ if ($chek_cat != ''){
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Вода' ");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Вода' ORDER BY zayavki.nom_zay DESC");
             break;
         case 'otop':
             $zag_tab1 = 'Заявки по отоплению';
@@ -173,7 +174,7 @@ if ($chek_cat != ''){
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Отопление' ");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Отопление' ORDER BY zayavki.nom_zay DESC");
             break;
         case 'kanal':
             $zag_tab1 = 'Заявки по канализации';
@@ -181,7 +182,7 @@ if ($chek_cat != ''){
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Канализация' ");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Канализация' ORDER BY zayavki.nom_zay DESC");
             break;
         case 'proch':
             $zag_tab1 = 'Заявки по прочим вопросам';
@@ -189,7 +190,7 @@ if ($chek_cat != ''){
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Прочее' ");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.category like 'Прочее' ORDER BY zayavki.nom_zay DESC");
             break;
         case 1:
             $zag_tab1 = 'Заявки по л/счету '.$lc_get;
@@ -197,7 +198,7 @@ if ($chek_cat != ''){
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.lchet = '{$lc_get}' ");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.lchet = '{$lc_get}' ORDER BY zayavki.nom_zay DESC");
             break;
         case 'dt':
             $zag_tab1 = 'Заявки по дате '.$dt_get;
@@ -205,7 +206,7 @@ if ($chek_cat != ''){
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.na_datu = '{$dt_get}' ");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.na_datu = '{$dt_get}' ORDER BY zayavki.nom_zay DESC");
             break;
         case 'all':
             $zag_tab1 = 'Все заявки';
@@ -213,7 +214,7 @@ if ($chek_cat != ''){
             $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls ORDER BY zayavki.nom_zay DESC");
             break;
     }
 
@@ -223,7 +224,7 @@ else {
     $sql = mysqli_query($link, "SELECT zayavki.nom_zay, zayavki.lchet, zayavki.category, zayavki.problem, zayavki.date_time, 
     zayavki.na_datu, zayavki.onwork, zayavki.phone, zayavki.done, person.name, person.AddressCity, person.AddressStreet, 
     person.AddressHouse, person.AddressFlat 
-      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.done is null");
+      FROM zayavki, person WHERE zayavki.lchet = person.kod_ls and zayavki.done is null ORDER BY zayavki.nom_zay DESC");
 }
 
 

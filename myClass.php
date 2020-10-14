@@ -39,4 +39,13 @@ class LogPass {
         }
 
     }
+    function writePayer($lchet, $fio, $adress, $sum, $date_now){
+        if (!isset($_SESSION['payer'][0])) {
+            $_SESSION['payer'][] = $lchet;
+            $_SESSION['payer'][] = $fio;
+            $_SESSION['payer'][] = $adress;
+            $_SESSION['payer'][] = $sum;
+            $_SESSION['payer'][] = $date_now;
+        }
+    }
 }

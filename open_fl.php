@@ -6,6 +6,8 @@
  * Time: 10:28
  */
 
+//Выгрузга хмл файла с данными на фтп
+
 require_once 'mySecure.php';
 
 $filep = $_FILES['userfile']['tmp_name'];

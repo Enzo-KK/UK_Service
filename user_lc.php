@@ -76,6 +76,25 @@ if ($chklp->lchet != '') {
           $pokazania[] = $row;
     }
     ///////////////////
+    /// получаем последний платежный номер из базы, присваиваем следующий номер для возможной транзакции оплаты
+    $sql = mysqli_query($link, "SELECT max(num_pay) as num_pay FROM payment ");
+//    if ($sql){
+        $row = mysqli_fetch_array($sql);
+        $new_num_pay=$row['num_pay'];
+        $new_num_pay=$new_num_pay+1;
+//        сохраняем номер в сессию для исключения повторной записи перед записью транзакции в pay_ok, pay_no
+    $_SESSION['new_num_pay'] = $new_num_pay;
+    $date_now = date("d.m.Y");
+//    }
+//    else  $new_num_pay=1;
+
+    //    записываем в сессию реквизиты плательщика
+
+    $chklp->writePayer($lchet, $fio, $city . ', ' . $ulica . ', '. $dom . ', ' . $kvart, substr($koplate,0,strpos($koplate,',')), $date_now);
+///////////////
+//    echo $fio . "\n";
+//echo "{$_SESSION['payer'][1]}";
+
     ///  проверяем наличие активного опроса
 $sql = mysqli_query($link, "SELECT * from opros where publ_op like 1");
 $iop = mysqli_num_rows($sql);
@@ -105,6 +124,8 @@ else{
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script><!--<div class="d-flex p-2 bd-highlight">Показания приборов учета</div>-->
+    <!--    скрипт альфы -->
+
 </head>
 <body>
 
@@ -142,8 +163,9 @@ else{
     <h3>Личный кабинет</h3>
     <p>Управляющая компания "Хозяин дома"</p>
     <?php if (isset($_SESSION['isactopr'])  && $_SESSION['isactopr'] == 1): ?>
-    <p><a href="user_opr.php">Предлагаем принять участие в опросе!</a></p>
+        <p><a href="user_opr.php">Предлагаем принять участие в опросе!</a></p>
     <?php endif; ?>
+
 <!--    <ul class="pagination">-->
 <!--        <li class="page-item active"><a class="page-link" href="#">Лицевой счет</a></li>-->
 <!--        <li class="page-item"><a class="page-link" href="data_indic.php">Подать показания</a></li>-->
@@ -209,7 +231,11 @@ else{
         </tbody>
     </table>
     <a class="btn btn-secondary" href="/" role="button" title="Вернуться ко входу в личный кабинет">Вернуться</a>
-    <a class="btn btn-success" href="#" role="button" title="Оплатить услуги">Оплатить</a>
+
+    <!--    показываем кнопку пока только ильину, больше никому -->
+    <?php if ($lchet==='0420239'):?>
+    <a class="btn btn-success" href="pay_page.php" role="button" title="Оплатить услуги">Оплатить</a>
+    <?php endif; ?>
 
     <p></p>
 
